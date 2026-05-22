@@ -1,4 +1,4 @@
-import { customElement, state, property } from "lit/decorators.js";
+import { customElement, state, property, query } from "lit/decorators.js";
 import { LitElement, html, css } from "lit";
 import "./task-column.ts";
 
@@ -50,8 +50,44 @@ export class TaskBoard extends LitElement {
     },
   ];
 
+  @state()
+  title: string = "";
+
+  @state()
+  description: string = "";
+
+  @state()
+  priority: string = "";
+
+  @query("input", true) _input!: HTMLInputElement;
+
   render() {
     return html`
+      <div class="form-container">
+        Title:
+        <input
+          .value=${this.title}
+          @input=${(e: Event) =>
+            (this.title = (e.target as HTMLInputElement).value)}
+        />
+        Description:
+        <input
+          .value=${this.description}
+          @input=${(e: Event) =>
+            (this.description = (e.target as HTMLInputElement).value)}
+        />
+        Priority:
+        <select
+          .value=${this.priority}
+          @change=${(e: Event) =>
+            (this.priority = (e.target as HTMLSelectElement).value)}
+        >
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <button @click=${this._addTask}>Add Task</button>
+      </div>
       <div class="column-container">
         <task-column
           name="To Do"
@@ -67,5 +103,22 @@ export class TaskBoard extends LitElement {
         ></task-column>
       </div>
     `;
+  }
+
+  private _addTask() {
+    this.tasks = [
+      ...this.tasks,
+      {
+        id: Math.random().toString(),
+        title: this.title,
+        description: this.description,
+        priority: this.priority,
+        status: "To Do",
+      },
+    ];
+
+    this.title = "";
+    this.description = "";
+    this.priority = "";
   }
 }
