@@ -62,7 +62,7 @@ export class TaskColumn extends LitElement {
         <div class="card-title">${this.name}</div>
         ${repeat(
           this.tasks,
-          (task) => task.title,
+          (task) => task.id,
           (task) =>
             html`<task-card
               title=${task.title}
