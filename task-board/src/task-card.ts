@@ -63,7 +63,7 @@ export class TaskCard extends LitElement {
             Description: ${this.description}
           </section>
           <section
-            class="priority-${this._propertyColor(
+            class="priority-${this._priorityColor(
               this.priority,
             )} title-priority"
           >
@@ -74,7 +74,7 @@ export class TaskCard extends LitElement {
     `;
   }
 
-  private _propertyColor = (priority: string): string => {
+  private _priorityColor = (priority: string): string => {
     let color: string = "";
     if (priority === "high") {
       color = "red";
