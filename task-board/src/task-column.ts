@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "./task-card.ts";
-import { repeat } from "lit/directives/repeat.js";
+import { repeat } from "lit/directives/repeat.js"
 
 @customElement("task-column")
 export class TaskColumn extends LitElement {
@@ -58,6 +58,7 @@ export class TaskColumn extends LitElement {
 
   render() {
     return html`
+      <div class="column">
       <slot name="header"></slot>
         ${repeat(
           this.tasks,
