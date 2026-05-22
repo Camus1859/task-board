@@ -1,6 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import "./task-card.ts";
+import { repeat } from "lit/directives/repeat.js"
 
 @customElement("task-column")
 export class TaskColumn extends LitElement {
@@ -29,18 +30,26 @@ export class TaskColumn extends LitElement {
   name: string = "";
 
   @state()
-  tasks: { title: string; description: string; priority: string }[] = [
+  tasks: {
+    title: string;
+    description: string;
+    priority: string;
+    id: string;
+  }[] = [
     {
+      id: Math.random().toString(),
       title: "Fix login bug",
       description: "Users can't log in with email",
       priority: "high",
     },
     {
+      id: Math.random().toString(),
       title: "Add dark mode",
       description: "Support dark theme toggle",
       priority: "medium",
     },
     {
+      id: Math.random().toString(),
       title: "Update footer",
       description: "Change copyright year",
       priority: "low",
@@ -51,13 +60,16 @@ export class TaskColumn extends LitElement {
     return html`
       <div class="column">
         <div class="card-title">${this.name}</div>
-        ${this.tasks.map((task) => {
-          return html`<task-card
-            title=${task.title}
-            description=${task.description}
-            priority=${task.priority}
-          ></task-card>`;
-        })}
+        ${repeat(
+          this.tasks,
+          (task) => task.title,
+          (task) =>
+            html`<task-card
+              title=${task.title}
+              description=${task.description}
+              priority=${task.priority}
+            ></task-card>`,
+        )}
       </div>
     `;
   }
