@@ -8,9 +8,8 @@ export class TaskCard extends LitElement {
       display: block;
     }
 
-    div {
-      border: 1px solid black;
-      padding: 20px;
+    section {
+      padding: 5px;
     }
 
     .title-section {
@@ -32,6 +31,18 @@ export class TaskCard extends LitElement {
     .priority-green {
       color: green;
     }
+
+    .container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-container {
+      width: 350px;
+      border: 1px solid black;
+      padding: 20px;
+      margin-bottom: 10px;
+    }
   `;
 
   @property()
@@ -45,16 +56,20 @@ export class TaskCard extends LitElement {
 
   render() {
     return html`
-      <div>
-        <section class="title-section">Title: ${this.title}</section>
-        <section class="title-description">
-          Description: ${this.description}
-        </section>
-        <section
-          class="priority-${this._propertyColor(this.priority)} title-priority"
-        >
-          Priority: ${this.priority}
-        </section>
+      <div class="container">
+        <div class="card-container">
+          <section class="title-section">Title: ${this.title}</section>
+          <section class="title-description">
+            Description: ${this.description}
+          </section>
+          <section
+            class="priority-${this._propertyColor(
+              this.priority,
+            )} title-priority"
+          >
+            Priority: ${this.priority}
+          </section>
+        </div>
       </div>
     `;
   }
