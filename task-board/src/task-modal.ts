@@ -25,6 +25,8 @@ export class TaskModal extends LitElement {
       width: 90%;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .close-btn {
@@ -33,6 +35,18 @@ export class TaskModal extends LitElement {
       top: 10px;
       font-size: 24px;
       cursor: pointer;
+    }
+
+    .description {
+      height: 100px;
+    }
+
+    .priority {
+      width: 100px;
+    }
+
+    .space {
+      margin-bottom: 10px;
     }
   `;
 
@@ -49,6 +63,7 @@ export class TaskModal extends LitElement {
           <span @click=${this._closeModal} class="close-btn">&times;</span>
           Title:
           <input
+            class="title"
             .value=${this.editingTask?.title}
             @input=${(e: Event) =>
               (this.editingTask = {
@@ -56,7 +71,11 @@ export class TaskModal extends LitElement {
                 title: (e.target as HTMLInputElement).value,
               })}
           />
+          <div class="space"></div>
+
+          Description:
           <input
+            class="description"
             .value=${this.editingTask?.description}
             @input=${(e: Event) =>
               (this.editingTask = {
@@ -64,7 +83,11 @@ export class TaskModal extends LitElement {
                 description: (e.target as HTMLInputElement).value,
               })}
           />
+          <div class="space"></div>
+
+          Priority:
           <select
+            class="priority"
             .value=${this.editingTask?.priority}
             @change=${(e: Event) =>
               (this.editingTask = {
@@ -76,7 +99,11 @@ export class TaskModal extends LitElement {
             <option value="medium">Medium</option>
             <option value="low">Low</option>
           </select>
+          <div class="space"></div>
+
+          Status:
           <select
+            class="status"
             .value=${this.editingTask?.status}
             @change=${(e: Event) =>
               (this.editingTask = {
@@ -88,6 +115,8 @@ export class TaskModal extends LitElement {
             <option value="In Progress">In Progress</option>
             <option value="Done">Done</option>
           </select>
+          <div class="space"></div>
+
           <button @click=${this._updateTask}>Save</button>
         </div>
       </div> `;
