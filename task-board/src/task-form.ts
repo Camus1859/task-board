@@ -54,8 +54,10 @@ export class TaskForm extends LitElement {
       <input
         class="title"
         .value=${this.title}
-        @input=${(e: Event) =>
-          (this.title = (e.target as HTMLInputElement).value)}
+        @input=${(e: Event) => {
+          this.title = (e.target as HTMLInputElement).value;
+          if (this.error.title) this.error = { ...this.error, title: "" };
+        }}
       />
       ${this.error.title ? html`<p class="error">${this.error.title}</p>` : ""}
       <div class="space"></div>
@@ -63,8 +65,10 @@ export class TaskForm extends LitElement {
       <input
         class="description"
         .value=${this.description}
-        @input=${(e: Event) =>
-          (this.description = (e.target as HTMLInputElement).value)}
+        @input=${(e: Event) => {
+          this.description = (e.target as HTMLInputElement).value;
+          if (this.error.description) this.error = { ...this.error, description: "" };
+        }}
       />
       ${this.error.description
         ? html`<p class="error">${this.error.description}</p>`
@@ -75,8 +79,10 @@ export class TaskForm extends LitElement {
       <select
         class="priority"
         .value=${this.priority}
-        @change=${(e: Event) =>
-          (this.priority = (e.target as HTMLSelectElement).value)}
+        @change=${(e: Event) => {
+          this.priority = (e.target as HTMLSelectElement).value;
+          if (this.error.priority) this.error = { ...this.error, priority: "" };
+        }}
       >
         <option value="high">High</option>
         <option value="medium">Medium</option>
