@@ -73,6 +73,7 @@ export class TaskCard extends LitElement {
             Priority: ${this.priority}
           </section>
           <button @click=${() => this._deleteTask(this.id)}>Delete Task</button>
+          <button @click=${() => this._EditTask(this.id)}>Edit Task</button>
         </div>
       </div>
     `;
@@ -98,5 +99,14 @@ export class TaskCard extends LitElement {
     };
 
     this.dispatchEvent(new CustomEvent("task-deleted", options));
+  };
+
+  private _EditTask = (id: string): void => {
+    const options = {
+      detail: { id: id, showModal: true },
+      bubbles: true,
+      composed: true,
+    };
+    this.dispatchEvent(new CustomEvent("task-edited", options));
   };
 }
