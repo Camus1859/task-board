@@ -38,13 +38,62 @@ export class TaskModal extends LitElement {
   @property()
   showModal: boolean = false;
 
+  @property()
+  editingTask: {
+    title: string;
+    description: string;
+    priority: string;
+    id: string;
+    status: string;
+  } | null = null;
+
   render() {
     if (this.showModal) {
       return html`<div class="modal-overlay">
         <div class="modal-content">
           <span @click=${this._closeModal} class="close-btn">&times;</span>
-          <h2>Basic Modal</h2>
-          <p>This is a centered modal window.</p>
+          Title:
+          <input
+            .value=${this.editingTask?.title}
+            @input=${(e: Event) =>
+              (this.editingTask = {
+                ...this.editingTask!,
+                title: (e.target as HTMLInputElement).value,
+              })}
+          />
+          <input
+            .value=${this.editingTask?.description}
+            @input=${(e: Event) =>
+              (this.editingTask = {
+                ...this.editingTask!,
+                description: (e.target as HTMLInputElement).value,
+              })}
+          />
+          <select
+            .value=${this.editingTask?.priority}
+            @change=${(e: Event) =>
+              (this.editingTask = {
+                ...this.editingTask!,
+                priority: (e.target as HTMLInputElement).value,
+              })}
+          >
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+          <select
+            .value=${this.editingTask?.status}
+            @change=${(e: Event) =>
+              (this.editingTask = {
+                ...this.editingTask!,
+                status: (e.target as HTMLInputElement).value,
+              })}
+          >
+            <option value="To Do">To Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Done">Done</option>
+          </select>
+          <button @click=${this._updateTask}>Save</button>
         </div>
       </div> `;
     } else {
@@ -59,5 +108,15 @@ export class TaskModal extends LitElement {
       composed: true,
     };
     this.dispatchEvent(new CustomEvent("show-modal", options));
+  }
+
+  private _updateTask() {
+    const options = {
+      detail: { editedTask: this.editingTask, showModal: false },
+      bubbles: true,
+      composed: true,
+    };
+
+    this.dispatchEvent(new CustomEvent("update-task", options));
   }
 }
