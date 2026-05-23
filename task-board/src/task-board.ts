@@ -55,9 +55,23 @@ export class TaskBoard extends LitElement {
   @state()
   showModal: boolean = false;
 
+  @state()
+  editingTask: {
+    title: string;
+    description: string;
+    priority: string;
+    id: string;
+    status: string;
+  } | null = null;
+
   render() {
     return html`
-      <task-modal .showModal=${this.showModal} @show-modal=${this._closeModal}>
+      <task-modal
+        .editingTask=${this.editingTask}
+        .showModal=${this.showModal}
+        @show-modal=${this._closeModal}
+        @update-task=${this._updateTask}
+      >
       </task-modal>
       <task-form @task-added=${this._handleTaskAdded}></task-form>
       <div class="column-container">
@@ -95,11 +109,23 @@ export class TaskBoard extends LitElement {
     console.log(e.detail.id);
     console.log("fired!");
     this.showModal = e.detail.showModal;
+
+    const taskToEdit =
+      this.tasks.find((task) => task.id === e.detail.id) || null;
+
+    this.editingTask = taskToEdit;
   }
 
   _handleShowModal(e: CustomEvent) {}
 
   _closeModal(e: CustomEvent) {
+    this.showModal = e.detail.showModal;
+  }
+
+  _updateTask(e: CustomEvent) {
+    this.tasks = this.tasks.map((task) =>
+      e.detail.editedTask.id === task.id ? { ...e.detail.editedTask } : task,
+    );
     this.showModal = e.detail.showModal;
   }
 }
