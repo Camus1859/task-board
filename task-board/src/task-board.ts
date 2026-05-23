@@ -52,18 +52,21 @@ export class TaskBoard extends LitElement {
   ];
   render() {
     return html`
-      <div class="column-container">
-        <task-form @task-added=${this._handleTaskAdded}></task-form>
+      <task-form @task-added=${this._handleTaskAdded}></task-form>
 
+      <div class="column-container">
         <task-column
+          @task-deleted=${this._handleTaskDeleted}
           name="To Do"
           .tasks=${this.tasks.filter((task) => task.status === "To Do")}
         ></task-column>
         <task-column
+          @task-deleted=${this._handleTaskDeleted}
           name="In Progress"
           .tasks=${this.tasks.filter((task) => task.status === "In Progress")}
         ></task-column>
         <task-column
+          @task-deleted=${this._handleTaskDeleted}
           name="Done"
           .tasks=${this.tasks.filter((task) => task.status === "Done")}
         ></task-column>
@@ -73,5 +76,9 @@ export class TaskBoard extends LitElement {
 
   _handleTaskAdded(e: CustomEvent) {
     this.tasks = [...this.tasks, e.detail.task];
+  }
+
+  _handleTaskDeleted(e: CustomEvent) {
+    this.tasks = this.tasks.filter((task) => task.id !== e.detail.id);
   }
 }

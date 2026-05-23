@@ -54,6 +54,9 @@ export class TaskCard extends LitElement {
   @property()
   priority: string = "";
 
+  @property()
+  id: string = "";
+
   render() {
     return html`
       <div class="container">
@@ -69,6 +72,7 @@ export class TaskCard extends LitElement {
           >
             Priority: ${this.priority}
           </section>
+          <button @click=${() => this._deleteTask(this.id)}>Delete Task</button>
         </div>
       </div>
     `;
@@ -84,5 +88,15 @@ export class TaskCard extends LitElement {
       color = "green";
     }
     return color;
+  };
+
+  private _deleteTask = (id: string): void => {
+    const options = {
+      detail: { id },
+      bubbles: true,
+      composed: true,
+    };
+
+    this.dispatchEvent(new CustomEvent("task-deleted", options));
   };
 }

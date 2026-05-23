@@ -52,6 +52,7 @@ export class TaskColumn extends LitElement {
               title=${task.title}
               description=${task.description}
               priority=${task.priority}
+              id=${task.id}
             ></task-card>`;
           },
         )}
