@@ -2,6 +2,7 @@ import { customElement, state, property, query } from "lit/decorators.js";
 import { LitElement, html, css } from "lit";
 import "./task-column.ts";
 import "./task-form.ts";
+import "./task-modal.ts";
 
 @customElement("task-board")
 export class TaskBoard extends LitElement {
@@ -50,23 +51,31 @@ export class TaskBoard extends LitElement {
       status: "Done",
     },
   ];
+
+  @state()
+  showModal: boolean = false;
+
   render() {
     return html`
+      <task-modal .showModal=${this.showModal} @show-modal=${this._closeModal}>
+      </task-modal>
       <task-form @task-added=${this._handleTaskAdded}></task-form>
-
       <div class="column-container">
         <task-column
           @task-deleted=${this._handleTaskDeleted}
+          @task-edited=${this._handleTaskEdited}
           name="To Do"
           .tasks=${this.tasks.filter((task) => task.status === "To Do")}
         ></task-column>
         <task-column
           @task-deleted=${this._handleTaskDeleted}
+          @task-edited=${this._handleTaskEdited}
           name="In Progress"
           .tasks=${this.tasks.filter((task) => task.status === "In Progress")}
         ></task-column>
         <task-column
           @task-deleted=${this._handleTaskDeleted}
+          @task-edited=${this._handleTaskEdited}
           name="Done"
           .tasks=${this.tasks.filter((task) => task.status === "Done")}
         ></task-column>
@@ -80,5 +89,17 @@ export class TaskBoard extends LitElement {
 
   _handleTaskDeleted(e: CustomEvent) {
     this.tasks = this.tasks.filter((task) => task.id !== e.detail.id);
+  }
+
+  _handleTaskEdited(e: CustomEvent) {
+    console.log(e.detail.id);
+    console.log("fired!");
+    this.showModal = e.detail.showModal;
+  }
+
+  _handleShowModal(e: CustomEvent) {}
+
+  _closeModal(e: CustomEvent) {
+    this.showModal = e.detail.showModal;
   }
 }
