@@ -46,7 +46,7 @@ export class TaskModal extends LitElement {
     }
 
     .space {
-      margin-bottom: 10px;
+      margin-bottom: var(--modal-space, 12px);
     }
   `;
 

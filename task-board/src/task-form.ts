@@ -24,7 +24,7 @@ export class TaskForm extends LitElement {
     }
 
     .space {
-      margin-bottom: 10px;
+      margin-bottom: var(--modal-space, 12px);
     }
 
     .error {
@@ -54,6 +54,8 @@ export class TaskForm extends LitElement {
       <input
         class="title"
         .value=${this.title}
+        i
+        d
         @input=${(e: Event) => {
           this.title = (e.target as HTMLInputElement).value;
           if (this.error.title) this.error = { ...this.error, title: "" };
@@ -67,7 +69,8 @@ export class TaskForm extends LitElement {
         .value=${this.description}
         @input=${(e: Event) => {
           this.description = (e.target as HTMLInputElement).value;
-          if (this.error.description) this.error = { ...this.error, description: "" };
+          if (this.error.description)
+            this.error = { ...this.error, description: "" };
         }}
       />
       ${this.error.description
