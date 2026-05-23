@@ -1,5 +1,6 @@
 import { customElement, state, property, query } from "lit/decorators.js";
 import { LitElement, html, css } from "lit";
+import { Task } from "./types.ts";
 import "./task-column.ts";
 import "./task-form.ts";
 import "./task-modal.ts";
@@ -22,13 +23,7 @@ export class TaskBoard extends LitElement {
   name: string = "";
 
   @state()
-  tasks: {
-    title: string;
-    description: string;
-    priority: string;
-    id: string;
-    status: string;
-  }[] = [
+  tasks: Task[] = [
     {
       id: Math.random().toString(),
       title: "Fix login bug",
@@ -56,13 +51,7 @@ export class TaskBoard extends LitElement {
   showModal: boolean = false;
 
   @state()
-  editingTask: {
-    title: string;
-    description: string;
-    priority: string;
-    id: string;
-    status: string;
-  } | null = null;
+  editingTask: Task | null = null;
 
   render() {
     return html`

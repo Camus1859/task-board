@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { Task } from "./types.ts";
 
 @customElement("task-modal")
 export class TaskModal extends LitElement {
@@ -39,13 +40,7 @@ export class TaskModal extends LitElement {
   showModal: boolean = false;
 
   @property()
-  editingTask: {
-    title: string;
-    description: string;
-    priority: string;
-    id: string;
-    status: string;
-  } | null = null;
+  editingTask: Task | null = null;
 
   render() {
     if (this.showModal) {

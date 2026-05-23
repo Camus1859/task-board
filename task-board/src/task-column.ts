@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { Task } from "./types.ts";
 import "./task-card.ts";
 import { repeat } from "lit/directives/repeat.js";
 
@@ -33,12 +34,7 @@ export class TaskColumn extends LitElement {
   name: string = "";
 
   @property({ type: Array })
-  tasks: {
-    title: string;
-    description: string;
-    priority: string;
-    id: string;
-  }[] = [];
+  tasks: Task[] = [];
 
   render() {
     return html`
