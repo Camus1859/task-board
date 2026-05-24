@@ -18,6 +18,10 @@ export class TaskBoard extends LitElement {
       justify-content: space-between;
       width: 100%;
     }
+
+    .space {
+      margin-bottom: var(--modal-space, 12px);
+    }
   `;
   @property()
   name: string = "";
@@ -59,6 +63,12 @@ export class TaskBoard extends LitElement {
   @state()
   hasError: boolean = false;
 
+  @state()
+  filterSelected: string = "all";
+
+  @state()
+  sortSelected: string = "none";
+
   render() {
     if (this.isLoading) {
       return html`<p>Loading tasks...</p>`;
@@ -81,24 +91,66 @@ export class TaskBoard extends LitElement {
       >
       </task-modal>
       <task-form @task-added=${this._handleTaskAdded}></task-form>
+      <div class="space"></div>
+
+      Filter:
+      <select
+        class="filter-option"
+        .value=${this.filterSelected}
+        @change=${(e: Event) => {
+          this.filterSelected = (e.target as HTMLSelectElement).value;
+        }}
+      >
+        <option value="all">All</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
       <div class="column-container">
         <task-column
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="To Do"
-          .tasks=${this.tasks.filter((task) => task.status === "To Do")}
+          .tasks=${this.tasks.filter((task) => {
+            if (this.filterSelected === "all") {
+              return task.status === "To Do";
+            } else {
+              return (
+                task.status === "To Do" &&
+                task.priority === this.filterSelected.toLocaleLowerCase()
+              );
+            }
+          })}
         ></task-column>
         <task-column
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="In Progress"
-          .tasks=${this.tasks.filter((task) => task.status === "In Progress")}
+          .tasks=${this.tasks.filter((task) => {
+            if (this.filterSelected === "all") {
+              return task.status === "In Progress";
+            } else {
+              return (
+                task.status === "In Progress" &&
+                task.priority === this.filterSelected.toLocaleLowerCase()
+              );
+            }
+          })}
         ></task-column>
         <task-column
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="Done"
-          .tasks=${this.tasks.filter((task) => task.status === "Done")}
+          .tasks=${this.tasks.filter((task) => {
+            if (this.filterSelected === "all") {
+              return task.status === "Done";
+            } else {
+              return (
+                task.status === "Done" &&
+                task.priority === this.filterSelected.toLocaleLowerCase()
+              );
+            }
+          })}
         ></task-column>
       </div>
     `;
