@@ -67,7 +67,7 @@ export class TaskBoard extends LitElement {
   filterSelected: string = "all";
 
   @state()
-  sortSelected: string = "none";
+  sortSelected: string = "default";
 
   render() {
     if (this.isLoading) {
@@ -92,7 +92,6 @@ export class TaskBoard extends LitElement {
       </task-modal>
       <task-form @task-added=${this._handleTaskAdded}></task-form>
       <div class="space"></div>
-
       Filter:
       <select
         class="filter-option"
@@ -105,6 +104,20 @@ export class TaskBoard extends LitElement {
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
+      </select>
+      <div class="space"></div>
+
+      Sort:
+      <select
+        class="sort-option"
+        .value=${this.sortSelected}
+        @change=${(e: Event) => {
+          this.sortSelected = (e.target as HTMLSelectElement).value;
+        }}
+      >
+        <option value="default">Default</option>
+        <option value="high-low">high-low</option>
+        <option value="low-high">low-high</option>
       </select>
       <div class="column-container">
         <task-column
@@ -162,7 +175,12 @@ export class TaskBoard extends LitElement {
   }
 
   _filterByPriority(status: string) {
-    return this.tasks.filter((task) => {
+    const priorityOrder: { [key: string]: number } = {
+      high: 1,
+      medium: 2,
+      low: 3,
+    };
+    const filtered = this.tasks.filter((task) => {
       if (this.filterSelected === "all") {
         return task.status === status;
       } else {
@@ -170,6 +188,18 @@ export class TaskBoard extends LitElement {
           task.status === status &&
           task.priority === this.filterSelected.toLocaleLowerCase()
         );
+      }
+    });
+
+    if (this.sortSelected === "default") {
+      return filtered;
+    }
+
+    return filtered.sort((a: Task, b: Task) => {
+      if (this.sortSelected === "high-low") {
+        return priorityOrder[a.priority] - priorityOrder[b.priority];
+      } else {
+        return priorityOrder[b.priority] - priorityOrder[a.priority];
       }
     });
   }
