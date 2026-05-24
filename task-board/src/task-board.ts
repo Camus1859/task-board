@@ -53,7 +53,25 @@ export class TaskBoard extends LitElement {
   @state()
   editingTask: Task | null = null;
 
+  @state()
+  isLoading: boolean = false;
+
+  @state()
+  hasError: boolean = false;
+
   render() {
+    if (this.isLoading) {
+      return html`<p>Loading tasks...</p>`;
+    }
+    if (this.hasError) {
+      return html`<p>Failed to load tasks</p>`;
+    }
+    if (this.tasks.length === 0) {
+      return html`
+        <task-form @task-added=${this._handleTaskAdded}></task-form>
+        <p>No tasks yet</p>
+      `;
+    }
     return html`
       <task-modal
         .editingTask=${this.editingTask}
