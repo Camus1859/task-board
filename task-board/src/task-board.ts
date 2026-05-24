@@ -111,46 +111,19 @@ export class TaskBoard extends LitElement {
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="To Do"
-          .tasks=${this.tasks.filter((task) => {
-            if (this.filterSelected === "all") {
-              return task.status === "To Do";
-            } else {
-              return (
-                task.status === "To Do" &&
-                task.priority === this.filterSelected.toLocaleLowerCase()
-              );
-            }
-          })}
+          .tasks=${this._filterByPriority("To Do")}
         ></task-column>
         <task-column
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="In Progress"
-          .tasks=${this.tasks.filter((task) => {
-            if (this.filterSelected === "all") {
-              return task.status === "In Progress";
-            } else {
-              return (
-                task.status === "In Progress" &&
-                task.priority === this.filterSelected.toLocaleLowerCase()
-              );
-            }
-          })}
+          .tasks=${this._filterByPriority("In Progress")}
         ></task-column>
         <task-column
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="Done"
-          .tasks=${this.tasks.filter((task) => {
-            if (this.filterSelected === "all") {
-              return task.status === "Done";
-            } else {
-              return (
-                task.status === "Done" &&
-                task.priority === this.filterSelected.toLocaleLowerCase()
-              );
-            }
-          })}
+          .tasks=${this._filterByPriority("Done")}
         ></task-column>
       </div>
     `;
@@ -186,5 +159,18 @@ export class TaskBoard extends LitElement {
       e.detail.editedTask.id === task.id ? { ...e.detail.editedTask } : task,
     );
     this.showModal = e.detail.showModal;
+  }
+
+  _filterByPriority(status: string) {
+    return this.tasks.filter((task) => {
+      if (this.filterSelected === "all") {
+        return task.status === status;
+      } else {
+        return (
+          task.status === status &&
+          task.priority === this.filterSelected.toLocaleLowerCase()
+        );
+      }
+    });
   }
 }
