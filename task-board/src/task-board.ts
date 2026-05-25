@@ -27,29 +27,7 @@ export class TaskBoard extends LitElement {
   name: string = "";
 
   @state()
-  tasks: Task[] = [
-    {
-      id: Math.random().toString(),
-      title: "Fix login bug",
-      description: "Users can't log in with email",
-      priority: "high",
-      status: "In Progress",
-    },
-    {
-      id: Math.random().toString(),
-      title: "Add dark mode",
-      description: "Support dark theme toggle",
-      priority: "medium",
-      status: "To Do",
-    },
-    {
-      id: Math.random().toString(),
-      title: "Update footer",
-      description: "Change copyright year",
-      priority: "low",
-      status: "Done",
-    },
-  ];
+  tasks: Task[] = [];
 
   @state()
   showModal: boolean = false;
@@ -142,12 +120,33 @@ export class TaskBoard extends LitElement {
     `;
   }
 
-  _handleTaskAdded(e: CustomEvent) {
-    this.tasks = [...this.tasks, e.detail.task];
+  async _handleTaskAdded(e: CustomEvent) {
+    try {
+      const postResponse = await fetch("http://localhost:3001/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(e.detail.task),
+      });
+      if (!postResponse.ok) throw new Error("Failed to add task");
+      this.tasks = await postResponse.json();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  _handleTaskDeleted(e: CustomEvent) {
-    this.tasks = this.tasks.filter((task) => task.id !== e.detail.id);
+  async _handleTaskDeleted(e: CustomEvent) {
+    try {
+      const deleteResponse = await fetch(
+        `http://localhost:3001/api/tasks/${e.detail.id}`,
+        {
+          method: "DELETE",
+        },
+      );
+      if (!deleteResponse.ok) throw new Error("Failed to delete task");
+      this.tasks = await deleteResponse.json();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   _handleTaskEdited(e: CustomEvent) {
@@ -161,17 +160,26 @@ export class TaskBoard extends LitElement {
     this.editingTask = taskToEdit;
   }
 
-  _handleShowModal(e: CustomEvent) {}
-
   _closeModal(e: CustomEvent) {
     this.showModal = e.detail.showModal;
   }
 
-  _updateTask(e: CustomEvent) {
-    this.tasks = this.tasks.map((task) =>
-      e.detail.editedTask.id === task.id ? { ...e.detail.editedTask } : task,
-    );
-    this.showModal = e.detail.showModal;
+  async _updateTask(e: CustomEvent) {
+    try {
+      const putResponse = await fetch(
+        `http://localhost:3001/api/tasks/${e.detail.editedTask.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(e.detail.editedTask),
+        },
+      );
+      if (!putResponse.ok) throw new Error("Failed to update task");
+      this.tasks = await putResponse.json();
+      this.showModal = e.detail.showModal;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   _filterByPriority(status: string) {
@@ -202,5 +210,27 @@ export class TaskBoard extends LitElement {
         return priorityOrder[b.priority] - priorityOrder[a.priority];
       }
     });
+  }
+
+  async connectedCallback() {
+    super.connectedCallback();
+
+    try {
+      this.isLoading = true;
+
+      const response = await fetch(`http://localhost:3001/api/tasks`);
+      if (!response.ok) throw new Error("Unable to fetch data");
+
+      const data = await response.json();
+
+      this.tasks = data;
+    } catch (e) {
+      this.isLoading = false;
+      this.hasError = true;
+
+      console.error(e);
+    } finally {
+      this.isLoading = false;
+    }
   }
 }
