@@ -58,20 +58,6 @@ let tasks = [
     status: "In Progress",
   },
   {
-    id: "8",
-    title: "Add password reset flow",
-    description: "Users need to reset passwords via email link",
-    priority: "high",
-    status: "To Do",
-  },
-  {
-    id: "9",
-    title: "Optimize database queries",
-    description: "Task list endpoint takes 3 seconds to load",
-    priority: "medium",
-    status: "To Do",
-  },
-  {
     id: "10",
     title: "Remove deprecated endpoints",
     description: "Clean up v1 API routes no longer in use",
@@ -120,7 +106,7 @@ app.post("/api/tasks", (req, res, next) => {
       status,
     };
     tasks.push(newTask);
-    res.status(201).json(newTask);
+    res.status(201).json(tasks);
   } catch (e) {
     next(e);
   }
@@ -133,7 +119,7 @@ app.put("/api/tasks/:id", (req, res, next) => {
     tasks = tasks.map((t) =>
       t.id === req.params.id ? { ...t, ...req.body } : t
     );
-    res.json(tasks.find((t) => t.id === req.params.id));
+    res.json(tasks);
   } catch (e) {
     next(e);
   }
@@ -144,7 +130,7 @@ app.delete("/api/tasks/:id", (req, res, next) => {
     const task = tasks.find((t) => t.id === req.params.id);
     if (!task) return res.status(404).json({ error: "Task not found" });
     tasks = tasks.filter((t) => t.id !== req.params.id);
-    res.status(204).send();
+    res.json(tasks);
   } catch (e) {
     next(e);
   }
