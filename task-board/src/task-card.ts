@@ -58,7 +58,7 @@ export class TaskCard extends LitElement {
     if (transferData) {
       transferData.effectAllowed = "move";
 
-      transferData?.setData("text/plain", this.id);
+      transferData.setData("text/plain", this.id);
     }
   }
 
