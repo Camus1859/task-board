@@ -49,10 +49,10 @@ export class TaskCard extends LitElement {
     super.connectedCallback();
 
     this.setAttribute("draggable", "true");
-    this.addEventListener("dragstart", this.onDragStart, { passive: false });
+    this.addEventListener("dragstart", this._onDragStart, { passive: false });
   }
 
-  onDragStart(event: DragEvent) {
+  _onDragStart(event: DragEvent) {
     const transferData: DataTransfer | null = event.dataTransfer;
 
     if (transferData) {
