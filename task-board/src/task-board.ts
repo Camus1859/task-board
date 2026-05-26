@@ -99,18 +99,21 @@ export class TaskBoard extends LitElement {
       </select>
       <div class="column-container">
         <task-column
+          @task-droped=${this._handleTaskDrop}
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="To Do"
           .tasks=${this._filterByPriority("To Do")}
         ></task-column>
         <task-column
+          @task-droped=${this._handleTaskDrop}
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="In Progress"
           .tasks=${this._filterByPriority("In Progress")}
         ></task-column>
         <task-column
+          @task-droped=${this._handleTaskDrop}
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="Done"
@@ -232,5 +235,21 @@ export class TaskBoard extends LitElement {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  async _handleTaskDrop(e: CustomEvent) {
+    const response = await fetch(
+      `http://localhost:3001/api/tasks/${e.detail.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: e.detail.columnName }),
+      },
+    );
+    if (!response.ok) throw new Error("Unable to fetch data");
+
+    const data = await response.json();
+
+    this.tasks = data;
   }
 }
