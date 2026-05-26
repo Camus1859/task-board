@@ -54,8 +54,6 @@ export class TaskForm extends LitElement {
       <input
         class="title"
         .value=${this.title}
-        i
-        d
         @input=${(e: Event) => {
           this.title = (e.target as HTMLInputElement).value;
           if (this.error.title) this.error = { ...this.error, title: "" };
