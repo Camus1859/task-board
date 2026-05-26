@@ -45,6 +45,23 @@ export class TaskCard extends LitElement {
     }
   `;
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.setAttribute("draggable", "true");
+    this.addEventListener("dragstart", this.onDragStart, { passive: false });
+  }
+
+  onDragStart(event: DragEvent) {
+    const transferData: DataTransfer | null = event.dataTransfer;
+
+    if (transferData) {
+      transferData.effectAllowed = "move";
+
+      transferData?.setData("text/plain", this.id);
+    }
+  }
+
   @property()
   title: string = "";
 
