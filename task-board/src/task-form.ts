@@ -1,5 +1,5 @@
 import { LitElement, css, html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, query, state } from "lit/decorators.js";
 
 @customElement("task-form")
 export class TaskForm extends LitElement {
@@ -31,6 +31,13 @@ export class TaskForm extends LitElement {
       color: red;
     }
   `;
+
+  @query(".title")
+  titleInput!: HTMLInputElement;
+
+  firstUpdated() {
+    this.titleInput.focus();
+  }
 
   @state()
   title: string = "";
