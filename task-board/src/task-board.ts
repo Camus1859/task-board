@@ -153,8 +153,6 @@ export class TaskBoard extends LitElement {
   }
 
   _handleTaskEdited(e: CustomEvent) {
-    console.log(e.detail.id);
-    console.log("fired!");
     this.showModal = e.detail.showModal;
 
     const taskToEdit =
