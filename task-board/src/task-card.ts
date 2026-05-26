@@ -52,6 +52,11 @@ export class TaskCard extends LitElement {
     this.addEventListener("dragstart", this._onDragStart, { passive: false });
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener("dragstart", this._onDragStart);
+  }
+
   _onDragStart(event: DragEvent) {
     const transferData: DataTransfer | null = event.dataTransfer;
 
