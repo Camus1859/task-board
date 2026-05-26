@@ -76,7 +76,7 @@ export class TaskColumn extends LitElement {
         bubbles: true,
         composed: true,
       };
-      this.dispatchEvent(new CustomEvent("task-droped", options));
+      this.dispatchEvent(new CustomEvent("task-dropped", options));
     }
   }
 
