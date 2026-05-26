@@ -236,18 +236,22 @@ export class TaskBoard extends LitElement {
   }
 
   async _handleTaskDrop(e: CustomEvent) {
-    const response = await fetch(
-      `http://localhost:3001/api/tasks/${e.detail.id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: e.detail.columnName }),
-      },
-    );
-    if (!response.ok) throw new Error("Unable to fetch data");
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/tasks/${e.detail.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: e.detail.columnName }),
+        },
+      );
+      if (!response.ok) throw new Error("Unable to fetch data");
 
-    const data = await response.json();
+      const data = await response.json();
 
-    this.tasks = data;
+      this.tasks = data;
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
