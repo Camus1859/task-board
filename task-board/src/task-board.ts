@@ -99,21 +99,21 @@ export class TaskBoard extends LitElement {
       </select>
       <div class="column-container">
         <task-column
-          @task-droped=${this._handleTaskDrop}
+          @task-dropped=${this._handleTaskDrop}
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="To Do"
           .tasks=${this._filterByPriority("To Do")}
         ></task-column>
         <task-column
-          @task-droped=${this._handleTaskDrop}
+          @task-dropped=${this._handleTaskDrop}
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="In Progress"
           .tasks=${this._filterByPriority("In Progress")}
         ></task-column>
         <task-column
-          @task-droped=${this._handleTaskDrop}
+          @task-dropped=${this._handleTaskDrop}
           @task-deleted=${this._handleTaskDeleted}
           @task-edited=${this._handleTaskEdited}
           name="Done"
