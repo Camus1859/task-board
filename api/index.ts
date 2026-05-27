@@ -1,5 +1,5 @@
-const express = require("express");
-const cors = require("cors");
+import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -87,7 +87,7 @@ let tasks = [
   },
 ];
 
-app.get("/api/tasks", (req, res, next) => {
+app.get("/api/tasks", (req: Request, res: Response, next: NextFunction) => {
   try {
     res.json(tasks);
   } catch (e) {
@@ -95,7 +95,7 @@ app.get("/api/tasks", (req, res, next) => {
   }
 });
 
-app.post("/api/tasks", (req, res, next) => {
+app.post("/api/tasks", (req: Request, res: Response, next: NextFunction) => {
   try {
     const { title, description, priority, status } = req.body;
     const newTask = {
@@ -112,7 +112,7 @@ app.post("/api/tasks", (req, res, next) => {
   }
 });
 
-app.put("/api/tasks/:id", (req, res, next) => {
+app.put("/api/tasks/:id", (req: Request, res: Response, next: NextFunction) => {
   try {
     const task = tasks.find((t) => t.id === req.params.id);
     if (!task) return res.status(404).json({ error: "Task not found" });
@@ -125,7 +125,7 @@ app.put("/api/tasks/:id", (req, res, next) => {
   }
 });
 
-app.delete("/api/tasks/:id", (req, res, next) => {
+app.delete("/api/tasks/:id", (req: Request, res: Response, next: NextFunction) => {
   try {
     const task = tasks.find((t) => t.id === req.params.id);
     if (!task) return res.status(404).json({ error: "Task not found" });
