@@ -1,0 +1,72 @@
+[
+  {
+    "id": "2",
+    "title": "Add dark mode",
+    "description": "Support dark theme toggle",
+    "priority": "medium",
+    "status": "To Do"
+  },
+  {
+    "id": "3",
+    "title": "Update footer",
+    "description": "Change copyright year",
+    "priority": "low",
+    "status": "Done"
+  },
+  {
+    "id": "4",
+    "title": "Set up CI/CD pipeline",
+    "description": "Automate testing and deployment with GitHub Actions",
+    "priority": "high",
+    "status": "To Do"
+  },
+  {
+    "id": "5",
+    "title": "Refactor user service",
+    "description": "Break monolithic user module into smaller functions",
+    "priority": "medium",
+    "status": "In Progress"
+  },
+  {
+    "id": "6",
+    "title": "Write API documentation",
+    "description": "Document all REST endpoints with examples",
+    "priority": "low",
+    "status": "To Do"
+  },
+  {
+    "id": "7",
+    "title": "Fix memory leak in dashboard",
+    "description": "Dashboard crashes after 30 minutes of use",
+    "priority": "high",
+    "status": "In Progress"
+  },
+  {
+    "id": "10",
+    "title": "Remove deprecated endpoints",
+    "description": "Clean up v1 API routes no longer in use",
+    "priority": "low",
+    "status": "Done"
+  },
+  {
+    "id": "11",
+    "title": "Add unit tests for auth module",
+    "description": "Coverage is at 20%, needs to be above 80%",
+    "priority": "medium",
+    "status": "In Progress"
+  },
+  {
+    "id": "12",
+    "title": "Migrate to TypeScript",
+    "description": "Convert remaining JS files to TypeScript",
+    "priority": "low",
+    "status": "In Progress"
+  },
+  {
+    "id": "13",
+    "title": "Fix broken notification emails",
+    "description": "Users not receiving signup confirmation emails",
+    "priority": "high",
+    "status": "Done"
+  }
+]
