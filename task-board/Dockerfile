@@ -1,9 +1,10 @@
-FROM node:22
+FROM node:22 AS build
 WORKDIR /task-board
 COPY package-lock.json .
 COPY package.json .
 RUN npm install
 COPY . . 
 RUN npm run build 
-EXPOSE 4173
-CMD ["npx", "vite", "preview", "--host"]
+
+FROM nginx:alpine
+COPY --from=build /task-board/dist /usr/share/nginx/html
