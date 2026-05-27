@@ -1,5 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import fs from "fs";
+
+const DATA_FILE = "/api/data/tasks.json";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -7,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-let tasks = [
+const defaultTasks = [
   {
     id: "1",
     title: "Fix login bug",
@@ -87,6 +90,20 @@ let tasks = [
   },
 ];
 
+function loadTasks() {
+  if (fs.existsSync(DATA_FILE)) {
+    return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
+  }
+  saveTasks(defaultTasks);
+  return defaultTasks;
+}
+
+function saveTasks(tasks: any[]) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(tasks, null, 2));
+}
+
+let tasks = loadTasks();
+
 app.get("/api/tasks", (req: Request, res: Response, next: NextFunction) => {
   try {
     res.json(tasks);
@@ -106,6 +123,7 @@ app.post("/api/tasks", (req: Request, res: Response, next: NextFunction) => {
       status,
     };
     tasks.push(newTask);
+    saveTasks(tasks);
     res.status(201).json(tasks);
   } catch (e) {
     next(e);
@@ -114,11 +132,12 @@ app.post("/api/tasks", (req: Request, res: Response, next: NextFunction) => {
 
 app.put("/api/tasks/:id", (req: Request, res: Response, next: NextFunction) => {
   try {
-    const task = tasks.find((t) => t.id === req.params.id);
+    const task = tasks.find((t: any) => t.id === req.params.id);
     if (!task) return res.status(404).json({ error: "Task not found" });
-    tasks = tasks.map((t) =>
+    tasks = tasks.map((t: any) =>
       t.id === req.params.id ? { ...t, ...req.body } : t
     );
+    saveTasks(tasks);
     res.json(tasks);
   } catch (e) {
     next(e);
@@ -127,9 +146,10 @@ app.put("/api/tasks/:id", (req: Request, res: Response, next: NextFunction) => {
 
 app.delete("/api/tasks/:id", (req: Request, res: Response, next: NextFunction) => {
   try {
-    const task = tasks.find((t) => t.id === req.params.id);
+    const task = tasks.find((t: any) => t.id === req.params.id);
     if (!task) return res.status(404).json({ error: "Task not found" });
-    tasks = tasks.filter((t) => t.id !== req.params.id);
+    tasks = tasks.filter((t: any) => t.id !== req.params.id);
+    saveTasks(tasks);
     res.json(tasks);
   } catch (e) {
     next(e);
