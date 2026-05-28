@@ -1,0 +1,16 @@
+services:
+  api:
+    build: ./api
+    ports: 
+      - "3001:3001"
+    volumes:
+      - ./data:/api/data
+
+
+
+  frontend:
+    build:  ./task-board
+    ports: 
+      - "8080:80"
+
+
