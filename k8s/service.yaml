@@ -6,8 +6,23 @@ spec:
     type: NodePort
     ports: 
       - targetPort: 3001
-        port: 80
+        port: 3001
         nodePort: 30008
     selector:
         app: task-board-api
         type: back-end
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-board-frontend-service
+spec:
+  type: NodePort 
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30009
+  selector:
+      app: task-board-frontend
+      type: front-end
