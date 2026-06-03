@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-board-api
+  labels:
+    tier: backend
+    app: task-board-api
+spec: 
+  selector:
+    matchLabels:
+      app: task-board-api
+  replicas: 1
+  template:
+    metadata:
+      name: task-board-api
+      labels: 
+        app: task-board-api
+    spec:
+      containers:
+        - name: task-board-api
+          image: alaventure/task-board-api
