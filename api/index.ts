@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import fs from "fs";
+import path from "path";
 
 const DATA_FILE = "/api/data/tasks.json";
 
@@ -99,6 +100,7 @@ function loadTasks() {
 }
 
 function saveTasks(tasks: any[]) {
+  fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
   fs.writeFileSync(DATA_FILE, JSON.stringify(tasks, null, 2));
 }
 
