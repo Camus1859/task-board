@@ -1,5 +1,5 @@
 services:
-  api:
+  task-board-service:
     build: ./api
     ports: 
       - "3001:3001"
