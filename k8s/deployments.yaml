@@ -20,3 +20,28 @@ spec:
       containers:
         - name: task-board-api
           image: alaventure/task-board-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-board-frontend
+  labels:
+    tier: front-end
+    app: task-board-frontend
+spec:
+  selector:
+    matchLabels:
+      app: task-board-frontend
+  replicas: 1
+  template: 
+    metadata:
+      name: task-board-frontend
+      labels: 
+        app: task-board-frontend
+        type: front-end
+    spec:
+      containers:
+        - name: task-board-frontend
+          image: alaventure/task-board-frontend
+      
+    
