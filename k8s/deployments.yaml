@@ -15,6 +15,7 @@ spec:
       name: task-board-api
       labels: 
         app: task-board-api
+        type: back-end
     spec:
       containers:
         - name: task-board-api
