@@ -125,7 +125,7 @@ export class TaskBoard extends LitElement {
 
   async _handleTaskAdded(e: CustomEvent) {
     try {
-      const postResponse = await fetch("http://localhost:3001/api/tasks", {
+      const postResponse = await fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(e.detail.task),
@@ -139,12 +139,9 @@ export class TaskBoard extends LitElement {
 
   async _handleTaskDeleted(e: CustomEvent) {
     try {
-      const deleteResponse = await fetch(
-        `http://localhost:3001/api/tasks/${e.detail.id}`,
-        {
-          method: "DELETE",
-        },
-      );
+      const deleteResponse = await fetch(`/api/tasks/${e.detail.id}`, {
+        method: "DELETE",
+      });
       if (!deleteResponse.ok) throw new Error("Failed to delete task");
       this.tasks = await deleteResponse.json();
     } catch (e) {
@@ -167,14 +164,11 @@ export class TaskBoard extends LitElement {
 
   async _updateTask(e: CustomEvent) {
     try {
-      const putResponse = await fetch(
-        `http://localhost:3001/api/tasks/${e.detail.editedTask.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(e.detail.editedTask),
-        },
-      );
+      const putResponse = await fetch(`/api/tasks/${e.detail.editedTask.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(e.detail.editedTask),
+      });
       if (!putResponse.ok) throw new Error("Failed to update task");
       this.tasks = await putResponse.json();
       this.showModal = e.detail.showModal;
@@ -219,7 +213,7 @@ export class TaskBoard extends LitElement {
     try {
       this.isLoading = true;
 
-      const response = await fetch(`http://localhost:3001/api/tasks`);
+      const response = await fetch(`/api/tasks`);
       if (!response.ok) throw new Error("Unable to fetch data");
 
       const data = await response.json();
@@ -237,14 +231,11 @@ export class TaskBoard extends LitElement {
 
   async _handleTaskDrop(e: CustomEvent) {
     try {
-      const response = await fetch(
-        `http://localhost:3001/api/tasks/${e.detail.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: e.detail.columnName }),
-        },
-      );
+      const response = await fetch(`/api/tasks/${e.detail.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: e.detail.columnName }),
+      });
       if (!response.ok) throw new Error("Unable to fetch data");
 
       const data = await response.json();
