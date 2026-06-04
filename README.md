@@ -15,6 +15,7 @@ A simplified Trello-style task board built with Lit web components, backed by an
 - **Frontend:** Lit, TypeScript, Vite
 - **Backend:** Node.js, Express, TypeScript
 - **Containerization:** Docker, Docker Compose
+- **Orchestration:** Kubernetes (Minikube)
 - **Frontend image:** Multi-stage build (Node + nginx)
 - **Backend image:** Node 22 + tsx
 - **Registry:** Docker Hub (`alaventure/task-board-frontend`, `alaventure/task-board-api`)
@@ -25,6 +26,7 @@ A simplified Trello-style task board built with Lit web components, backed by an
 - `api/` — Express REST API
 - `docker-compose.yml` — Runs both services together
 - `data/` — Bind mount volume for task persistence
+- `k8s/` — Kubernetes manifests (Deployments, Services, PVC)
 
 ## Getting Started
 
@@ -45,6 +47,21 @@ docker compose up --build
 docker compose logs          
 ```
 
+### Run with Kubernetes (Minikube)
+
+```bash
+# Create namespace
+kubectl create namespace task-board
+
+# Apply manifests
+kubectl apply -f k8s/pvc.yaml --namespace=task-board
+kubectl apply -f k8s/deployments.yaml --namespace=task-board
+kubectl apply -f k8s/service.yaml --namespace=task-board
+
+# Open in browser (macOS)
+minikube service task-board-frontend-service --namespace=task-board
+```
+
 ### Run locally (without Docker)
 
 ```bash
@@ -57,7 +74,6 @@ cd task-board && npm install && npm run dev
 
 ## Upcoming
 
-- [ ] Kubernetes deployment
 - [ ] Helm chart
 - [ ] CI/CD with ArgoCD
 - [ ] Python microservice (priority scoring / workload analysis)
