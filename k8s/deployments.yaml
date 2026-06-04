@@ -20,6 +20,13 @@ spec:
       containers:
         - name: task-board-api
           image: alaventure/task-board-api
+          volumeMounts:
+            - mountPath: "/api/data/"
+              name: task-board-storage
+      volumes:
+          - name: task-board-storage
+            persistentVolumeClaim:
+              claimName: task-board-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
