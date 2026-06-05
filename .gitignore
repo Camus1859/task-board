@@ -33,3 +33,6 @@ npm-debug.log*
 
 # Local config
 *.local
+
+# dummy data 
+data/tasks.json
