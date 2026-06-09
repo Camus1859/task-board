@@ -5,9 +5,9 @@ metadata:
 spec:
     type: NodePort
     ports: 
-      - targetPort: 3001
-        port: 3001
-        nodePort: 30008
+      - targetPort: {{ .Values.api.targetPort }}
+        port: {{ .Values.api.port }}
+        nodePort: {{ .Values.api.nodePort }}
     selector:
         app: task-board-api
         type: back-end
@@ -20,9 +20,9 @@ metadata:
 spec:
   type: NodePort 
   ports:
-    - targetPort: 80
-      port: 80
-      nodePort: 30009
+    - targetPort: {{ .Values.frontend.targetPort }}
+      port: {{ .Values.frontend.port }}
+      nodePort: {{ .Values.frontend.nodePort }}
   selector:
       app: task-board-frontend
       type: front-end
