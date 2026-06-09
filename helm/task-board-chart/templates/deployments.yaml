@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: task-board-api
-  replicas: 1
+  replicas: {{ .Values.api.replicas }}
   template:
     metadata:
       name: task-board-api
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: task-board-api
-          image: alaventure/task-board-api
+          image: {{ .Values.api.image}}
           volumeMounts:
             - mountPath: "/api/data/"
               name: task-board-storage
@@ -39,7 +39,7 @@ spec:
   selector:
     matchLabels:
       app: task-board-frontend
-  replicas: 1
+  replicas: {{ .Values.front-end.replicas }}
   template: 
     metadata:
       name: task-board-frontend
@@ -49,6 +49,6 @@ spec:
     spec:
       containers:
         - name: task-board-frontend
-          image: alaventure/task-board-frontend
+          image: {{ .Values.frontend.image }}
       
     
