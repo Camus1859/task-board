@@ -39,7 +39,7 @@ spec:
   selector:
     matchLabels:
       app: task-board-frontend
-  replicas: {{ .Values.front-end.replicas }}
+  replicas: {{ .Values.frontend.replicas }}
   template: 
     metadata:
       name: task-board-frontend
