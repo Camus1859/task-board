@@ -75,6 +75,5 @@ cd task-board && npm install && npm run dev
 
 ## Upcoming
 
-- [x] Helm chart
 - [ ] CI/CD with ArgoCD
 - [ ] Python microservice (priority scoring / workload analysis)
