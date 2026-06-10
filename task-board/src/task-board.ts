@@ -14,7 +14,7 @@ export class TaskBoard extends LitElement {
 
     .column-container {
       display: flex;
-      background-color: red;
+      background-color: white;
       justify-content: space-between;
       width: 100%;
     }
