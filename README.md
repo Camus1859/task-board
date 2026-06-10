@@ -1,6 +1,6 @@
 # Task Board
 
-A simplified Trello-style task board built with Lit web components, backed by an Express API, containerized with Docker.
+A simplified Trello-style task board built with Lit web components, backed by an Express API, containerized with Docker, orchestrated with Kubernetes and Helm.
 
 ## Features
 
@@ -27,6 +27,7 @@ A simplified Trello-style task board built with Lit web components, backed by an
 - `docker-compose.yml` — Runs both services together
 - `data/` — Bind mount volume for task persistence
 - `k8s/` — Kubernetes manifests (Deployments, Services, PVC)
+- `helm/task-board-chart/` — Helm chart for templated K8s deployments
 
 ## Getting Started
 
@@ -74,6 +75,6 @@ cd task-board && npm install && npm run dev
 
 ## Upcoming
 
-- [ ] Helm chart
+- [x] Helm chart
 - [ ] CI/CD with ArgoCD
 - [ ] Python microservice (priority scoring / workload analysis)
