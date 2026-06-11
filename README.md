@@ -75,5 +75,10 @@ cd task-board && npm install && npm run dev
 
 ## Upcoming
 
-- [ ] CI/CD with ArgoCD
-- [ ] Python microservice (priority scoring / workload analysis)
+- [ ] Debugging Boot Camp (Phase 5 — in progress)
+- [ ] Rebuild from scratch (Phase 5)
+- [ ] Replace JSON file with Postgres (Phase 6)
+- [ ] Add tests — unit, integration, e2e (Phase 7)
+- [ ] CI/CD pipeline with GitHub Actions (Phase 8)
+- [ ] GitOps with ArgoCD (Phase 9 — optional)
+- [ ] Python microservice (Phase 10 — optional)
