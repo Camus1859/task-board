@@ -20,6 +20,11 @@ spec:
       containers:
         - name: task-board-api
           image: {{ .Values.api.image}}
+          resources:
+            requests:
+              memory: "100Mi"
+            limits:
+              memory: "200Mi"
           volumeMounts:
             - mountPath: "/api/data/"
               name: task-board-storage
