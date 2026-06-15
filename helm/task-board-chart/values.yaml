@@ -7,7 +7,7 @@ api:
 
 frontend:
   replicas: 1
-  image: alaventure/task-board-frontend:v8
+  image: alaventure/task-board-frontend:v10
   targetPort: 80
   port: 80
   nodePort: 30009
