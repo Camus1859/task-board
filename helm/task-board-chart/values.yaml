@@ -1,13 +1,13 @@
 api:
   replicas: 1
-  image: alaventure/task-board-api:v6
+  image: alaventure/task-board-api:v8
   targetPort: 3001
   port: 3001
   nodePort: 30008
 
 frontend:
   replicas: 1
-  image: alaventure/task-board-frontend:v6
+  image: alaventure/task-board-frontend:v8
   targetPort: 80
   port: 80
   nodePort: 30009
